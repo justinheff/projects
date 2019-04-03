@@ -40,16 +40,16 @@ var content = new Vue
                 }
             },
 
-            // 重绘experiment ----------------------------------------------------------------------
+            // experiment ----------------------------------------------------------------------
             drawExperiment: function()
             {
-                // x 都是测试序数 //
+                
                 let xs = [];
 
                 for(let i=0; i<this.instance["description"]["evolution_all"]; i++)
                 {   xs.push(i+1);   }
 
-                // trials的time-costs统计 - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
                 let timecost_ys = [];
 
                 for(let i=1; i<this.instance["evolutions"].length; i++)
@@ -76,7 +76,7 @@ var content = new Vue
 
                 Plotly.newPlot(   $(".figure.timecost.statistics")[0], experiment_plotly1, layout1, {responsive: true}   );
 
-                // trials的distance统计 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
                 let best_ys = [];
                 let worst_ys = [];
                 let avg_ys = [];
@@ -120,16 +120,16 @@ var content = new Vue
                 Plotly.newPlot(   $(".figure.distance.statistics")[0], experiment_plotly2, {}, {responsive: true}   );
             },
 
-            // 重绘evolution -----------------------------------------------------------------------
+            //evolution -----------------------------------------------------------------------
             drawEvolution: function()
             {
-                // x 都是世代序数 //
+                
                 let xs = [];
 
                 for(let i=0; i<this.generation_all; i++)
                 {   xs.push(i+1);   }
 
-                // 选中的测试的各世代max、min、avg分布 - - - - - - - - - - - - - - - - - - - - - - - -
+                
                 let best_ys = [];
                 let worst_ys = [];
                 let avg_ys = [];
@@ -172,16 +172,16 @@ var content = new Vue
                 Plotly.newPlot(   $(".figure.distance.trend")[0], experiment_plotly2, {}, {responsive: true}   );
             },
 
-            // 重绘generation ----------------------------------------------------------------------
+            // generation ----------------------------------------------------------------------
             drawGeneration: function()
             {
-                // x 都是世代序数 //
+                
                 let xs = [];
 
                 for(let i=0; i<this.generation_size; i++)
                 {   xs.push(i+1);   }
 
-                // 选中的世代的所有个体的distance分布 - - - - - - - - - - - - - - - - - - - - - - - -
+                
                 let ys = [];
 
                 for(let i=0; i<this.generation_size; i++)
@@ -201,13 +201,13 @@ var content = new Vue
                 //console.log(experiment_plotly2);
                 Plotly.newPlot(   $(".figure.distance.distribution")[0], experiment_plotly2, {}, {responsive: true}   );
 
-                // 显示数据 //
+                
                 $("#gen_fit_best").text( this.instance["evolutions"][this.trial_n-1][this.generation_n]["best-individual-distance"] );
                 $("#gen_fit_avg").text( this.instance["evolutions"][this.trial_n-1][this.generation_n]["average-distance"] );
                 $("#gen_fit_worst").text( this.instance["evolutions"][this.trial_n-1][this.generation_n]["worst-individual-distance"] );
             },
 
-            // 重绘individual ----------------------------------------------------------------------
+            // individual ----------------------------------------------------------------------
             drawIndividual: function()
             {
                 let ids = [];
@@ -252,11 +252,11 @@ var content = new Vue
                 console.log(individual_plotly);
                 Plotly.newPlot(   $(".figure.route")[0], individual_plotly, {}, {responsive: true}   );
 
-                // 在文本域输出序列 //
+            
                 $(".dashboard textarea").text( ids.toString() );
             },
 
-            // 重绘plain map -----------------------------------------------------------------------
+            // plain map -----------------------------------------------------------------------
             drawPlainMap: function()
             {
                 this.plain_map = null;
