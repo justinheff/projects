@@ -1,0 +1,157 @@
+<!--
+    需要作图的内容：
+        性能
+            basic的完成用时 - advanced的完成用时（线条图）
+                位于experiment中，x = 10次trial，y = 两者的用时
+        效用
+            basic的三种适应度 - advanced的三种适应度（线条图）
+                位于experiment中，x = 10次trial，y = 两者的三种最终适应度
+        generation
+            适应度分布
+            距离分布
+        individual
+            地图路线
+        evolution
+            适应度随世代趋势
+            距离随世代趋势
+
+--->
+<!--*********************************************************************************************-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GraphingGUI</title>
+    <!-- using libraries ////////////////////////////////////////////////////////////////////////-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- using stylesheet ///////////////////////////////////////////////////////////////////////-->
+    <link rel="stylesheet" href="GraphingGUI.css">
+    <!-- import data files //////////////////////////////////////////////////////////////////////-->
+    <script src="coords_Canada.js"></script>
+    <script src="coords_Uruguay.js"></script>
+    <script src="coords_WesternSahara.js"></script>
+
+    <!--script src="basic_Canada.js"></script-->
+    <!--script src="basic_Uruguay.js"></script-->
+    <!--script src="basic_WesternSahara.js"></script-->
+    <script src="advanced_Canada.js"></script>
+    <script src="advanced_Uruguay.js"></script>
+    <script src="advanced_WesternSahara.js"></script>
+</head>
+
+<body>
+    <div id="title">TSP solving by GA Graphing Tool</div>
+    <div id="content">
+        <el-tabs class="tabs" type="border-card">
+            <el-tab-pane class="experiment page" label="Experiment">
+                <div :style="x_style_area" style="overflow: auto;">
+                    <h4>An experiment consists of 10 runs (evolution trials)</h4>
+                    time cost statistics（based on each run）<br>
+                    <div class="figure timecost statistics"></div>
+                    <div class="divbar"></div>
+                    distance statistics（based on each generation's max、avg、min distance）<br>
+                    <div class="figure distance statistics"></div>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane class="evolution page" label="Evolution">
+                <div :style="x_style_area" style="overflow: auto;">
+                    distance trend（based on each generation's max、avg、min distance）<br>
+                    <div class="figure distance trend"></div>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane class="generation page" label="Generation">
+                <div :style="x_style_area" style="overflow: auto;">
+                    （current selected）current generation's distance distribution<br>
+                    <div class="figure distance distribution"></div>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane class="individual page" label="Individual">
+                <div :style="x_style_area" style="overflow: auto;">
+                    <div class="figure route"></div>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane class="plain-map page" label="Plain Map">
+                <div :style="x_style_area" style="overflow: auto;">
+                    <div class="figure map"></div>
+                </div>
+            </el-tab-pane>
+        </el-tabs>
+        <el-select class="instance_selector" v-model="instance_select" placeholder="select an instance"
+        @change="drawPlainMap(); drawExperiment(); drawEvolution(); drawIndividual()">
+            <el-option :key="0" :value="'WesternSahara'">WesternSahara</el-option>
+            <el-option :key="1" :value="'Uruguay'">Uruguay</el-option>
+            <el-option :key="2" :value="'Canada'">Canada</el-option>
+        </el-select>
+        <el-checkbox-group class="algorithm checkbox" v-model="algorithm_select">
+            <el-checkbox label="basic">Basic</el-checkbox>
+            <el-checkbox label="advanced">Advanced</el-checkbox>
+        </el-checkbox-group>
+        <el-button class="dashboard button" @click="toggleDashboard()" size="medium">
+            Dashboard
+        </el-button>
+        <div class="dashboard panel" v-show="show_dashboard">
+
+            <h4>Select trial</h4>
+            <el-slider v-model="trial_n" :min="1" :max="trial_all" show-input
+            @change="drawEvolution();drawGeneration();drawIndividual()"></el-slider>
+
+            <div class="divbar"></div>
+            <h4>Select generation</h4>
+            <el-slider v-model="generation_n" :min="1" :max="generation_all" show-input
+            @change="drawGeneration();drawIndividual()"></el-slider>
+
+            <div class="divbar"></div>
+            <h4>Select individual (best-worst)</h4>
+            <el-slider v-model="individual_n" :min="1" :max="2" show-input @change="drawIndividual()"></el-slider>
+
+            <div class="divbar"></div>
+            <h4>Details</h4>
+            <div class="details indent20">
+                <h5>generation</h5>
+                    <span class="indent20">distance</span>
+                    <table class="indent40">
+                        <tbody>
+                            <tr>
+                                <td>average:</td>
+                                <td id="gen_fit_avg">__???__</td>
+                            </tr>
+                            <tr>
+                                <td>shortest:</td>
+                                <td id="gen_fit_best">__???__</td>
+                            </tr>
+                            <tr>
+                                <td>longest:</td>
+                                <td id="gen_fit_worst">__???__</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <h5>individual</h5>
+                <table class="indent20">
+                    <tbody>
+                        <tr>
+                            <td>distance:</td>
+                            <td>__???__</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+
+            <div class="divbar"></div>
+            <h4>Route</h4>
+            <textarea name="route" rows="8" style="width: 100%;"></textarea>
+        </div>
+    </div>
+</body>
+
+<script src="GraphingGUI.js" charset="utf-8"></script>
+
+</html>

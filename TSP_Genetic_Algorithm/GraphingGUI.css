@@ -1,0 +1,137 @@
+*{
+    font-family: microsoft yahei ui;
+    box-sizing: border-box;
+    /*color: black;*/
+    /*line-height: normal;*/
+    /*font-weight: normal;*/
+    /*font-size: initial;*/
+}
+
+html{
+    font-size: 16px；
+}
+
+body{
+    margin: 8px;
+    position: relative;
+}
+
+.el-input__inner{
+    border-radius: 0px;
+    background-color: #f5f7fa;
+}
+
+.divbar{
+    height: 1px;
+    background-color: #dcdfe6;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+#title {
+    display: flex;
+    height: 30px;
+    line-height: 30px;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.tabs{
+    height: 1100px;
+}
+
+
+.instance_selector{
+    position: absolute;
+    top: 30px;
+    right: 590px;
+    border-radius: 0px;
+    height: 40px;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.algorithm.checkbox{
+    position: absolute;
+    top: 30px;
+    right: 400px;
+    border-radius: 0px;
+    height: 40px;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.dashboard.button{
+    position: absolute;
+    top: 30px;
+    right: 0px;
+    border-radius: 0px;
+    background-color: #f5f7fa;
+    width: 401px;
+    height: 40px;
+}
+
+.dashboard.panel{
+    position: absolute;
+    height: 1059px;
+    width: 400px;
+    right: 1px;
+    top: 70px;
+    border-left: 1px solid lightgrey;
+    z-index: 100;
+    background-color: #f5f7fa;
+    padding: 10px;
+}
+
+.dashboard textarea{
+    font-size: 20px;
+}
+
+.el-slider__button.el-tooltip{
+    color: white;
+}
+
+.el-slider__button-wrapper, .el-slider__button.hover, .el-slider__button:hover{
+    cursor: pointer;
+}
+
+.indent20{
+    margin-left: 20px;
+}
+.indent40{
+    margin-left: 40px;
+}
+
+/* figures //////////////////////////////////////////////////////////////////////////////////////*/
+
+.figure{
+    width: 100%;
+    width: 1850px;
+}
+
+.figure.timecost, .figure.distance.statistics{
+    height: 450px;
+}
+.figure.distance.trend, .figure.distance.distribution{
+    height: 1000px;
+}
+
+.figure.route, .figure.map{
+    height: 1000px;
+    width: 1850px;
+}
+
+
+
+
+
+
+
+
+
+
+/**/
