@@ -1,0 +1,44 @@
+<form>
+    <h2>Retrieve boat information reserved by a given sailor</h2>
+    <p>Enter a part name: <input type="text" name="sname"></p>
+    <p>Select information you want to retrieve:</p>
+    <input type="checkbox" name="partinfo1" value="sid"> Supplier ID<br>
+    <input type="checkbox" name="partinfo2" value="sname"> Supplier Name<br>
+    <input type="checkbox" name="partinfo3" value="address"> Supplier Address<br>
+    <input type="checkbox" name="partinfo4" value="cost"> Part cost<br>
+    <br>
+    <input type="submit" name="submit" value="Submit"><br>
+</form>
+<br>
+<br>
+<form>
+    <h2>Retrieve the names of the suppliers who have ever supplied a part with given cost or higher</h2>
+    <p>Enter a cost: <input type="text" name="cost"></p>
+    <br>
+    <input type="submit" name="submit" value="Submit"><br>
+</form>
+<br>
+<br>
+<form>
+    <h2>Retrieve the names and addresses for the suppliers who charge the most for that part</h2>
+    <p>Enter a PID: <input type="text" name="pid"></p>
+    <br>
+    <input type="submit" name="submit" value="Submit"><br>
+</form>
+<br>
+<br>
+<form>
+    <h2>Retrieve the names of the parts with given color which were supplied by all the suppliers in the given address</h2>
+    <p>Enter a color: <input type="text" name="color"></p>
+    <p>Enter an address: <input type="text" name="address"></p>
+    <br>
+    <input type="submit" name="submit" value="Submit"><br>
+</form>
+<br>
+<br>
+<form>
+    <h2>Retrieve the SIDs and names of the suppliers in the given address who do not supply any part</h2>
+    <p>Enter an address: <input type="text" name="address"></p>
+    <br>
+    <input type="submit" name="submit" value="Submit"><br>
+</form>
